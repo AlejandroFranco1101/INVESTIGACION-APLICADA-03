@@ -14,7 +14,7 @@ const colorLines = document.querySelector('.color-lines');
 // Crear las líneas de colores en el DOM
 function createColorLines() {
   colorLines.innerHTML = ''; // Limpiar líneas previas
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 12; i++) {
     const line = document.createElement('div');
     line.classList.add('line');
     colorLines.appendChild(line);
