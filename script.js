@@ -1,19 +1,23 @@
-const netflixLetter = document.getElementById("netflix-letter");
+function elegirLetra() {
+  const letra = prompt("Escribe una letra del abecedario:").toUpperCase();
 
-function cambiarLetra() {
-  const letra = prompt("Escribe una letra del abecedario (solo una):");
-  if (letra && letra.length === 1 && /^[a-zA-Z]$/.test(letra)) {
-    netflixLetter.textContent = letra.toUpperCase();
-  } else {
-    alert("Por favor, ingresa solo una letra válida.");
-  }
-}
+  if (letra && /^[A-Z]$/.test(letra)) {
+    const spanLetra = document.getElementById("netflix-letter");
+    const lightBars = document.querySelector(".light-bars");
 
-function cambiarNombre() {
-  const nombre = prompt("Escribe un nombre:");
-  if (nombre && nombre.trim().length > 0) {
-    netflixLetter.textContent = nombre.trim().charAt(0).toUpperCase();
+    // Reiniciar animaciones
+    spanLetra.style.animation = "none";
+    lightBars.style.animation = "none";
+    void spanLetra.offsetWidth; // Fuerza el reinicio de la animación
+    void lightBars.offsetWidth;
+
+    // Cambiar letra
+    spanLetra.textContent = letra;
+
+    // Reaplicar animaciones
+    spanLetra.style.animation = "fadeIn 2s ease-in-out forwards";
+    lightBars.style.animation = "lightAnimation 2s ease-in-out forwards";
   } else {
-    alert("Por favor, escribe un nombre válido.");
+    alert("Por favor ingresa una única letra válida (A-Z).");
   }
 }
