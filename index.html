@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Netflix Logo Animado</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Intro Netflix Personalizada</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-
-  <div class="logo-container">
-    <div id="netflix-letter" class="netflix-letter">N</div>
-    <div class="light-rays"></div>
+  <div class="menu">
+    <button onclick="elegirLetra()">Elegir Letra</button>
   </div>
 
-  <div class="buttons">
-    <button onclick="cambiarLetra()">Cambiar letra</button>
-    <button onclick="cambiarNombre()">Cambiar nombre</button>
+  <div class="netflix-intro">
+    <div class="letter-container">
+      <span id="netflix-letter">N</span>
+      <div class="light-bars"></div>
+    </div>
   </div>
 
   <script src="script.js"></script>
