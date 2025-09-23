@@ -1,27 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Intro Netflix Estilo Personalizado</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Intro estilo Netflix — Letra personalizable</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="menu">
-    <button onclick="elegirLetra()">Elegir Letra</button>
-  </div>
+  <main class="stage">
+    <section class="ui">
+      <label for="letra">Elige una letra</label>
+      <input id="letra" type="text" maxlength="1" value="N" aria-label="Letra a animar" />
+      <button id="play">Reproducir</button>
+    </section>
 
-  <div class="intro-container">
-    <div class="letter-mask">
-      <span id="netflix-letter">N</span>
-      <div class="scanlines">
-        <div class="line custom1"></div>
-        <div class="line custom2"></div>
-        <div class="line custom3"></div>
-        <div class="line custom4"></div>
+    <section id="intro" aria-hidden="true">
+      <!-- haces de luz -->
+      <div class="beams" aria-hidden="true">
+        <span class="beam b1"></span>
+        <span class="beam b2"></span>
+        <span class="beam b3"></span>
+        <span class="beam b4"></span>
+        <span class="beam b5"></span>
+        <span class="beam b6"></span>
+        <span class="beam b7"></span>
+        <span class="beam b8"></span>
+        <span class="beam b9"></span>
+        <span class="beam b10"></span>
+        <span class="beam b11"></span>
+        <span class="beam b12"></span>
       </div>
-    </div>
-  </div>
+
+      <!-- resplandor / flare -->
+      <div class="flare" aria-hidden="true"></div>
+
+      <!-- letra -->
+      <div class="letter-wrap">
+        <span id="letter">N</span>
+      </div>
+
+      <!-- grano sutil -->
+      <div class="grain" aria-hidden="true"></div>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>

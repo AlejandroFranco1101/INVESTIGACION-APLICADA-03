@@ -1,115 +1,218 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Reset básico */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: #000; color: #fff; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, "Noto Sans", "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; }
+
+:root{
+  --netflix-red: #e50914;
+  --beam-red-1: #ff2a36;
+  --beam-red-2: #aa0008;
+  --accent: #d4d4d4;
+  --anim-total: 2000ms;         /* duración total aprox. */
+  --letter-size: clamp(96px, 20vw, 360px);
 }
 
-body {
-  background-color: black;
-  height: 100vh;
-  overflow: hidden;
-  font-family: 'Arial', sans-serif;
+.stage{
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
 }
 
-.menu {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 100;
-}
-
-.menu button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-/* Container */
-.intro-container {
+/* UI */
+.ui{
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
+  gap: 12px;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: black;
+  padding: 8px 12px;
+  background: rgba(0,0,0,.6);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+.ui label{ font-size: .9rem; color: #ddd; }
+.ui input{
+  width: 3ch;
+  text-align: center;
+  padding: 6px 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+}
+.ui button{
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--netflix-red);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .06s ease, filter .2s ease;
+}
+.ui button:hover{ filter: brightness(1.1); }
+.ui button:active{ transform: translateY(1px) scale(.99); }
+
+/* Intro container */
+#intro{
   position: relative;
+  width: min(1200px, 92vw);
+  aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(120% 80% at 50% 60%, #0d0d0f 0%, #000 60%, #000 100%);
   overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.65), inset 0 0 0 1px rgba(255,255,255,.06);
 }
 
-/* Letter mask effect */
-.letter-mask {
-  position: relative;
-  font-size: 35vw;
-  font-weight: bold;
-  color: black;
-  -webkit-text-stroke: 1px white;
-  z-index: 1;
-  filter: brightness(2);
+/* Beams (haces) */
+.beams{
+  position: absolute; inset: 0;
+  filter: blur(2px) saturate(120%);
+}
+.beam{
+  position: absolute; left: -15%;
+  width: 30%;
+  height: 1px;
+  opacity: 0;
+  background: linear-gradient(90deg, transparent 0%, var(--beam-red-2) 20%, var(--beam-red-1) 60%, transparent 100%);
+  transform-origin: left center;
+  will-change: transform, opacity;
+}
+.b1{ top: 20%; }
+.b2{ top: 27%; }
+.b3{ top: 34%; }
+.b4{ top: 41%; }
+.b5{ top: 48%; }
+.b6{ top: 55%; }
+.b7{ top: 62%; }
+.b8{ top: 69%; }
+.b9{ top: 76%; }
+.b10{ top: 83%; }
+.b11{ top: 30%; }
+.b12{ top: 70%; }
+
+body.play .beam{
+  animation: beam-sweep var(--anim-total) ease-in forwards;
+}
+body.play .b1{ animation-delay: 60ms; }
+body.play .b2{ animation-delay: 120ms; }
+body.play .b3{ animation-delay: 180ms; }
+body.play .b4{ animation-delay: 240ms; }
+body.play .b5{ animation-delay: 300ms; }
+body.play .b6{ animation-delay: 360ms; }
+body.play .b7{ animation-delay: 420ms; }
+body.play .b8{ animation-delay: 480ms; }
+body.play .b9{ animation-delay: 540ms; }
+body.play .b10{ animation-delay: 600ms; }
+body.play .b11{ animation-delay: 200ms; transform: rotate(8deg); }
+body.play .b12{ animation-delay: 500ms; transform: rotate(-6deg); }
+
+@keyframes beam-sweep{
+  0%   { transform: translateX(0) scaleX(0.6); opacity: 0; }
+  10%  { opacity: .9; }
+  55%  { transform: translateX(140%) scaleX(1); opacity: .85; }
+  80%  { opacity: .25; }
+  100% { transform: translateX(180%) scaleX(1); opacity: 0; }
+}
+
+/* Flare (resplandor central) */
+.flare{
+  position: absolute; inset: -20%;
+  background:
+    radial-gradient(20% 14% at 50% 60%, rgba(255,255,255,.7), rgba(255,255,255,.28) 30%, transparent 60%),
+    radial-gradient(60% 50% at 50% 60%, rgba(255,0,0,.15), transparent 60%);
+  opacity: 0;
+  transform: scale(1.4);
   mix-blend-mode: screen;
 }
-
-/* Letter */
-#netflix-letter {
-  position: relative;
-  z-index: 2;
+body.play .flare{
+  animation: flare-pop 1400ms ease-out 200ms forwards;
+}
+@keyframes flare-pop{
+  0%   { opacity: 0; transform: scale(1.6); filter: blur(10px); }
+  35%  { opacity: 1; transform: scale(1.0); filter: blur(0px); }
+  100% { opacity: 0.2; transform: scale(1.15); filter: blur(6px); }
 }
 
-/* Scanlines container */
-.scanlines {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 3;
-  pointer-events: none;
-  overflow: hidden;
+/* Letra */
+.letter-wrap{
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
 }
-
-/* Animated lines */
-.line {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    transparent 40%,
-    rgba(255,255,255,0.5),
-    transparent 60%
-  );
-  transform: rotate(-20deg) scaleY(2);
+#letter{
+  font-weight: 900;
+  font-stretch: condensed;
+  font-size: var(--letter-size);
+  letter-spacing: -0.04em;
+  color: #fff;
+  text-shadow:
+    0 0 6px rgba(255,255,255,.25),
+    0 0 26px rgba(229,9,20,.35),
+    0 0 60px rgba(229,9,20,.35);
+  transform: scale(.9);
   opacity: 0;
-  animation: scan 2s ease-in-out forwards;
+  filter: drop-shadow(0 0 28px rgba(229,9,20,.25));
 }
 
-/* Custom colors for each line */
-.custom1 {
-  background: linear-gradient(to right, transparent 40%, rgba(0, 255, 255, 0.6), transparent 60%);
-  animation-delay: 0.1s;
-}
-.custom2 {
-  background: linear-gradient(to right, transparent 40%, rgba(255, 0, 255, 0.6), transparent 60%);
-  animation-delay: 0.3s;
-}
-.custom3 {
-  background: linear-gradient(to right, transparent 40%, rgba(255, 255, 0, 0.6), transparent 60%);
-  animation-delay: 0.5s;
-}
-.custom4 {
-  background: linear-gradient(to right, transparent 40%, rgba(0, 128, 255, 0.6), transparent 60%);
-  animation-delay: 0.7s;
+/* Animaciones de la letra (aparición + “flicker”) */
+body.play #letter{
+  animation:
+    letter-in 900ms cubic-bezier(.2,.8,.2,1) 300ms forwards,
+    letter-flicker 800ms linear 1100ms 1 forwards,
+    letter-glow 1200ms ease-in-out 300ms 1 forwards;
 }
 
-/* Animation keyframes */
-@keyframes scan {
-  0% {
-    top: 100%;
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    top: -100%;
-    opacity: 0;
-  }
+@keyframes letter-in{
+  0%   { opacity: 0; transform: scale(.84) translateY(8px); }
+  60%  { opacity: 1; transform: scale(1.02) translateY(0); }
+  100% { opacity: 1; transform: scale(1.0); }
+}
+@keyframes letter-flicker{
+  0%, 14%, 16%, 18%, 22%, 100% { opacity: 1; }
+  15%, 17%, 21% { opacity: .55; }
+}
+@keyframes letter-glow{
+  0% { text-shadow: 0 0 6px rgba(255,255,255,.25), 0 0 26px rgba(229,9,20,.30), 0 0 60px rgba(229,9,20,.30); }
+  100% { text-shadow: 0 0 10px rgba(255,255,255,.4), 0 0 40px rgba(229,9,20,.55), 0 0 110px rgba(229,9,20,.55); }
+}
+
+/* Grano (ruido muy sutil para cine) */
+.grain{
+  position: absolute; inset: -50%;
+  pointer-events: none;
+  opacity: .06;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,.2) 0 1px, transparent 1px),
+    radial-gradient(circle at 30% 80%, rgba(255,255,255,.2) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 10%, rgba(255,255,255,.2) 0 1px, transparent 1px),
+    radial-gradient(circle at 90% 50%, rgba(255,255,255,.2) 0 1px, transparent 1px);
+  background-size: 7px 7px, 11px 11px, 13px 13px, 17px 17px;
+  mix-blend-mode: screen;
+  animation: grain-move 1200ms steps(2) infinite;
+}
+@keyframes grain-move{
+  0% { transform: translate(0,0); }
+  25% { transform: translate(-2%, 1%); }
+  50% { transform: translate(1%, -2%); }
+  75% { transform: translate(2%, 1%); }
+  100% { transform: translate(0,0); }
+}
+
+/* Fin sutil: oscurecer un poco al terminar */
+body.play #intro::after{
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(120% 90% at 50% 60%, transparent 0%, rgba(0,0,0,.25) 70%, rgba(0,0,0,.45) 100%);
+  animation: vignette 1400ms ease 800ms forwards;
+  opacity: 0;
+}
+@keyframes vignette{
+  to{ opacity: 1; }
 }

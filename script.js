@@ -1,20 +1,48 @@
-function elegirLetra() {
-  const letra = prompt("Escribe una letra del abecedario:").toUpperCase();
-
-  if (letra && /^[A-Z]$/.test(letra)) {
-    const spanLetra = document.getElementById("netflix-letter");
-    const lines = document.querySelectorAll(".line");
-
-    // Cambiar la letra
-    spanLetra.textContent = letra;
-
-    // Reiniciar animaciones
-    lines.forEach(line => {
-      line.style.animation = 'none';
-      void line.offsetWidth;
-      line.style.animation = 'scan 2s ease-in-out forwards';
-    });
-  } else {
-    alert("Por favor ingresa una única letra válida (A-Z).");
-  }
+// Utilidad: forzar reflujo para reiniciar animaciones CSS
+function restartAnimation(node) {
+  // elimina y vuelve a añadir la clase en body
+  document.body.classList.remove('play');
+  // fuerza reflow
+  void node.offsetWidth;
+  // vuelve a reproducir
+  document.body.classList.add('play');
 }
+
+const input = document.getElementById('letra');
+const btn = document.getElementById('play');
+const letter = document.getElementById('letter');
+const intro = document.getElementById('intro');
+
+// normaliza letras con Ñ/ñ y acentos: tomamos el primer carácter visible
+function sanitizeChar(str) {
+  if (!str) return 'N';
+  const c = [...str.trim()][0]; // soporta unicode
+  return c || 'N';
+}
+
+// al cargar: reproducir una vez
+window.addEventListener('load', () => {
+  restartAnimation(intro);
+});
+
+// clic en “Reproducir”
+btn.addEventListener('click', () => {
+  const c = sanitizeChar(input.value || 'N');
+  letter.textContent = c.toUpperCase();
+  restartAnimation(intro);
+});
+
+// también al presionar Enter dentro del input
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    btn.click();
+  }
+});
+
+// limita a un solo carácter visible (unicode) en el input
+input.addEventListener('input', () => {
+  const chars = [...input.value];
+  if (chars.length > 1) {
+    input.value = chars[0];
+  }
+});
