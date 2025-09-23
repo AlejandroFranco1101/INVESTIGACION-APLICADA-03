@@ -71,55 +71,59 @@ html, body { height: 100%; background: #000; color: #fff; font-family: system-ui
   box-shadow: 0 20px 60px rgba(0,0,0,.65), inset 0 0 0 1px rgba(255,255,255,.06);
 }
 
-/* Beams (haces) */
-.beams{
-  position: absolute; inset: 0;
-  filter: blur(2px) saturate(120%);
-}
-.beam{
-  position: absolute; left: -15%;
-  width: 30%;
-  height: 1px;
+/* Nuevas líneas de colores animadas */
+.color-lines {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
   opacity: 0;
-  background: linear-gradient(90deg, transparent 0%, var(--beam-red-2) 20%, var(--beam-red-1) 60%, transparent 100%);
-  transform-origin: left center;
-  will-change: transform, opacity;
 }
-.b1{ top: 20%; }
-.b2{ top: 27%; }
-.b3{ top: 34%; }
-.b4{ top: 41%; }
-.b5{ top: 48%; }
-.b6{ top: 55%; }
-.b7{ top: 62%; }
-.b8{ top: 69%; }
-.b9{ top: 76%; }
-.b10{ top: 83%; }
-.b11{ top: 30%; }
-.b12{ top: 70%; }
-
-body.play .beam{
-  animation: beam-sweep var(--anim-total) ease-in forwards;
+.line {
+  position: absolute;
+  top: -100%;
+  width: 100%;
+  height: 10px;
+  background-color: var(--netflix-red);
+  animation: color-line-sweep var(--anim-total) ease-out forwards;
+  opacity: 0;
 }
-body.play .b1{ animation-delay: 60ms; }
-body.play .b2{ animation-delay: 120ms; }
-body.play .b3{ animation-delay: 180ms; }
-body.play .b4{ animation-delay: 240ms; }
-body.play .b5{ animation-delay: 300ms; }
-body.play .b6{ animation-delay: 360ms; }
-body.play .b7{ animation-delay: 420ms; }
-body.play .b8{ animation-delay: 480ms; }
-body.play .b9{ animation-delay: 540ms; }
-body.play .b10{ animation-delay: 600ms; }
-body.play .b11{ animation-delay: 200ms; transform: rotate(8deg); }
-body.play .b12{ animation-delay: 500ms; transform: rotate(-6deg); }
 
-@keyframes beam-sweep{
-  0%   { transform: translateX(0) scaleX(0.6); opacity: 0; }
-  10%  { opacity: .9; }
-  55%  { transform: translateX(140%) scaleX(1); opacity: .85; }
-  80%  { opacity: .25; }
-  100% { transform: translateX(180%) scaleX(1); opacity: 0; }
+body.play .color-lines {
+  animation: show-lines 1200ms ease-out forwards;
+}
+
+body.play .line:nth-child(1) { animation-delay: 50ms; background-color: #e50914; }
+body.play .line:nth-child(2) { animation-delay: 150ms; background-color: #ff2a36; }
+body.play .line:nth-child(3) { animation-delay: 250ms; background-color: #aa0008; }
+body.play .line:nth-child(4) { animation-delay: 350ms; background-color: #ff4d66; }
+body.play .line:nth-child(5) { animation-delay: 450ms; background-color: #ff0069; }
+body.play .line:nth-child(6) { animation-delay: 550ms; background-color: #e50914; }
+
+@keyframes color-line-sweep {
+  0% {
+    top: -100%;
+    opacity: 1;
+  }
+  40% {
+    top: 10%;
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes show-lines {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* Flare (resplandor central) */
@@ -161,12 +165,13 @@ body.play .flare{
   filter: drop-shadow(0 0 28px rgba(229,9,20,.25));
 }
 
-/* Animaciones de la letra (aparición + “flicker”) */
+/* Animación de la letra (como desvanecimiento) */
 body.play #letter{
   animation:
     letter-in 900ms cubic-bezier(.2,.8,.2,1) 300ms forwards,
     letter-flicker 800ms linear 1100ms 1 forwards,
-    letter-glow 1200ms ease-in-out 300ms 1 forwards;
+    letter-glow 1200ms ease-in-out 300ms 1 forwards,
+    letter-fade-to-lines 1000ms linear 600ms forwards;
 }
 
 @keyframes letter-in{
@@ -181,6 +186,21 @@ body.play #letter{
 @keyframes letter-glow{
   0% { text-shadow: 0 0 6px rgba(255,255,255,.25), 0 0 26px rgba(229,9,20,.30), 0 0 60px rgba(229,9,20,.30); }
   100% { text-shadow: 0 0 10px rgba(255,255,255,.4), 0 0 40px rgba(229,9,20,.55), 0 0 110px rgba(229,9,20,.55); }
+}
+
+@keyframes letter-fade-to-lines {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
 }
 
 /* Grano (ruido muy sutil para cine) */
