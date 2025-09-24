@@ -45,6 +45,11 @@ window.onload = function() {
         }, 4000); // Después de 4 segundos, el logo empieza a desaparecer (el doble de tiempo)
     }
 
+    // Reproducir la animación automáticamente con la letra predeterminada (por ejemplo, "N")
+    logo.textContent = "N"; // Usamos "N" como letra predeterminada
+    createLines(); // Crear las líneas
+    startLogoAnimation(); // Iniciar animación del logo
+
     // Funcionalidad del botón "Reproducir"
     playButton.addEventListener('click', function() {
         const selectedLetter = letterSelector.value; // Obtener la letra seleccionada
