@@ -1,36 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Intro estilo Netflix — Letra personalizable</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Intro</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="stage">
-    <section class="ui">
-      <label for="letra">Elige una letra</label>
-      <input id="letra" type="text" maxlength="1" value="N" aria-label="Letra a animar" />
-      <button id="play">Reproducir</button>
-    </section>
+    <div class="menu-container">
+        <!-- Dropdown menu to select a letter -->
+        <select id="letterSelector">
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="G">G</option>
+            <option value="H">H</option>
+            <option value="I">I</option>
+            <option value="J">J</option>
+            <option value="K">K</option>
+            <option value="L">L</option>
+            <option value="M">M</option>
+            <option value="N">N</option>
+            <option value="O">O</option>
+            <option value="P">P</option>
+            <option value="Q">Q</option>
+            <option value="R">R</option>
+            <option value="S">S</option>
+            <option value="T">T</option>
+            <option value="U">U</option>
+            <option value="V">V</option>
+            <option value="W">W</option>
+            <option value="X">X</option>
+            <option value="Y">Y</option>
+            <option value="Z">Z</option>
+        </select>
 
-    <section id="intro" aria-hidden="true">
-      <!-- las rayas de colores -->
-      <div class="color-lines"></div>
-      
-      <!-- resplandor / flare -->
-      <div class="flare" aria-hidden="true"></div>
+        <!-- Agregar el botón Reproducir -->
+        <button id="playButton">Reproducir</button>
+    </div>
 
-      <!-- letra -->
-      <div class="letter-wrap">
-        <span id="letter">N</span>
-      </div>
+    <div class="wrapper">
+        <div class="netflix-logo">N</div> <!-- Inicializamos con la letra "N" -->
+        <div class="lines-container"></div>
+    </div>
 
-      <!-- grano sutil -->
-      <div class="grain" aria-hidden="true"></div>
-    </section>
-  </main>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
