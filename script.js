@@ -4,10 +4,10 @@ window.onload = function() {
     const playButton = document.getElementById('playButton'); // Obtener el botón de reproducir
     const linesContainer = document.querySelector('.lines-container');
 
-    const numberOfLines = 150; // Número de líneas
+    const numberOfLines = 1000; // Número de líneas
 
     // Definir patrón cíclico de colores, siempre terminando en negro
-    const baseColors = ['#ff0000', '#e6e7dfff', '#5817eeff', '#ff0000', '#b22222', '#0e060aff', '#dc143c', '#5817eeff', '#b22222', '#ffffff', '#dd7a0aff', '#ffffff', '#a11a8bff', '#117aaaff']; // Colores base
+    const baseColors = ['#ff0000', '#e6e7dfff', '#5817eeff', '#f6f6f7ff', '#180ea7ff', ]; // Colores base
     const colors = []; // Array final que incluirá el patrón con el último color como negro
 
     // Llenar el arreglo de colores cíclicos, siempre asegurando que termine en negro
@@ -42,7 +42,7 @@ window.onload = function() {
     function startLogoAnimation() {
         setTimeout(() => {
             logo.style.opacity = "0"; // Hacer desaparecer el logo
-        }, 4000); // Después de 4 segundos, el logo empieza a desaparecer (el doble de tiempo)
+        }, 2000); // Después de 4 segundos, el logo empieza a desaparecer (el doble de tiempo)
     }
 
     // Reproducir la animación automáticamente con la letra predeterminada (por ejemplo, "N")
